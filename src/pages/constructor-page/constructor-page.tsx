@@ -6,11 +6,13 @@ import { BurgerIngredients } from '../../components';
 import { BurgerConstructor } from '../../components';
 import { Preloader } from '../../components/ui';
 import { FC } from 'react';
+import { ingredientSelectors } from '../../storage/slices/ingredients';
 
 export const ConstructorPage: FC = () => {
   /** TODO: взять переменную из стора */
-  const isIngredientsLoading = false;
-
+  //const isIngredientsLoading = false;
+  // eslint-disable-next-line prettier/prettier
+  const isIngredientsLoading = useSelector( ingredientSelectors.isIngredientsLoading);
   return (
     <>
       {isIngredientsLoading ? (
