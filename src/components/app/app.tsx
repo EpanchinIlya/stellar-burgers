@@ -23,7 +23,6 @@ const App = () => {
 
   useEffect(() => {
     dispatch(fetchIngredients());
-    //dispatch()
   }, []);
 
   return (

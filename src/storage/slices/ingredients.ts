@@ -6,11 +6,18 @@ import { TIngredient } from '@utils-types';
 
 export interface ingredientState {
   isIngredientsLoading: Boolean;
+  bun: TIngredient[];
+  main: TIngredient[];
+  sauce: TIngredient[];
+
   data: TIngredient[];
 }
 
 const initialState: ingredientState = {
   isIngredientsLoading: true,
+  bun: [],
+  main: [],
+  sauce: [],
   data: []
 };
 
@@ -25,7 +32,7 @@ const ingredientSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchIngredients.pending, (state) => {
-        console.log('Запрашиваю');
+        console.log('Запрашиваю ingredient');
         state.isIngredientsLoading = true;
       })
       .addCase(fetchIngredients.rejected, (state) => {
@@ -33,15 +40,42 @@ const ingredientSlice = createSlice({
         console.log('Ошибка');
       })
       .addCase(fetchIngredients.fulfilled, (state, action) => {
-        state.data = action.payload;
-        state.isIngredientsLoading = false;
-        console.log('Получил');
+        console.log('Получил ingredient');
         console.log(action.payload);
+        const allData = action.payload;
+        const bun: TIngredient[] = [];
+        const main: TIngredient[] = [];
+        const sauce: TIngredient[] = [];
+
+        allData.forEach((item) => {
+          switch (item.type) {
+            case 'bun':
+              bun.push(item);
+              break;
+            case 'main':
+              main.push(item);
+              break;
+            case 'sauce':
+              sauce.push(item);
+              break;
+            default:
+              console.log('Invalid ingredient');
+          }
+        });
+
+        state.bun = bun;
+        state.main = main;
+        state.sauce = sauce;
+
+        state.isIngredientsLoading = false;
       });
   },
   selectors: {
     isIngredientsLoading: (state) => state.isIngredientsLoading,
-    ingredients: (state) => state.data
+    ingredients: (state) => state.data,
+    bun: (state) => state.bun,
+    main: (state) => state.main,
+    sauce: (state) => state.sauce
   }
 });
 

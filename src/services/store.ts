@@ -8,6 +8,7 @@ import {
 import ingredientSlice, {
   ingredientRedusers
 } from '../storage/slices/ingredients';
+import feedsSlice, { feedsRedusers } from '../storage/slices/feeds';
 
 // const rootReducer = () => {
 //   return([ingredientSlice.name]: ingredientSlice.reducer,
@@ -15,7 +16,8 @@ import ingredientSlice, {
 // }; // Заменить на импорт настоящего редьюсера
 
 const rootReducer = combineReducers({
-  [ingredientSlice.name]: ingredientRedusers
+  [ingredientSlice.name]: ingredientRedusers,
+  [feedsSlice.name]: feedsRedusers
 });
 
 const store = configureStore({
