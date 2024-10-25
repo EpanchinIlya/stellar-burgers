@@ -13,7 +13,13 @@ import '../../index.css';
 import styles from './app.module.css';
 
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import {
+  Route,
+  Routes,
+  useLocation,
+  useMatch,
+  useNavigate
+} from 'react-router-dom';
 import { useDispatch } from '../../services/store';
 import { useEffect } from 'react';
 import { fetchIngredients } from '../../storage/thunk/ingredient';
@@ -28,6 +34,10 @@ const App = () => {
   const location = useLocation();
   const background = location.state?.background;
   const navigate = useNavigate();
+  const profileMatch = useMatch('/profile/orders/:number')?.params.number;
+  const feedMatch = useMatch('/feed/:number')?.params.number;
+  const orderNumber = profileMatch || feedMatch;
+
   return (
     <>
       <AppHeader />
@@ -51,7 +61,7 @@ const App = () => {
             path='/feed/:number'
             element={
               <Modal
-                title='Заказ'
+                title={`#${orderNumber ? orderNumber.padStart(6, '0') : ''} `}
                 onClose={() => {
                   navigate(-1);
                 }}
@@ -77,7 +87,12 @@ const App = () => {
           <Route
             path='/profile/orders/:number'
             element={
-              <Modal title='модал' onClose={() => {}}>
+              <Modal
+                title='модал'
+                onClose={() => {
+                  navigate(-1);
+                }}
+              >
                 <OrderInfo />
               </Modal>
             }
