@@ -9,6 +9,9 @@ import ingredientSlice, {
   ingredientRedusers
 } from '../storage/slices/ingredients';
 import feedsSlice, { feedsRedusers } from '../storage/slices/feeds';
+import constructorSlice, {
+  constructorRedusers
+} from '../storage/slices/constructor';
 
 // const rootReducer = () => {
 //   return([ingredientSlice.name]: ingredientSlice.reducer,
@@ -17,7 +20,8 @@ import feedsSlice, { feedsRedusers } from '../storage/slices/feeds';
 
 const rootReducer = combineReducers({
   [ingredientSlice.name]: ingredientRedusers,
-  [feedsSlice.name]: feedsRedusers
+  [feedsSlice.name]: feedsRedusers,
+  [constructorSlice.name]: constructorRedusers
 });
 
 const store = configureStore({

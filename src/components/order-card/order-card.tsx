@@ -11,7 +11,7 @@ const maxIngredients = 6;
 
 export const OrderCard: FC<OrderCardProps> = memo(({ order }) => {
   const location = useLocation();
-  //console.dir(order);
+
   /** взять переменную из стора */
   const ingredients = useSelector(ingredientSelectors.ingredients);
 
