@@ -32,7 +32,6 @@ const ingredientSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchIngredients.pending, (state) => {
-        console.log('Запрашиваю ingredient');
         state.isIngredientsLoading = true;
       })
       .addCase(fetchIngredients.rejected, (state) => {
@@ -40,8 +39,7 @@ const ingredientSlice = createSlice({
         console.log('Ошибка');
       })
       .addCase(fetchIngredients.fulfilled, (state, action) => {
-        console.log('Получил ingredient');
-        console.log(action.payload);
+        // console.log(action.payload);
         const allData = action.payload;
         const bun: TIngredient[] = [];
         const main: TIngredient[] = [];
@@ -66,6 +64,7 @@ const ingredientSlice = createSlice({
         state.bun = bun;
         state.main = main;
         state.sauce = sauce;
+        state.data = allData;
 
         state.isIngredientsLoading = false;
       });

@@ -6,10 +6,14 @@ import { fetchFeeds } from '../thunk/feeds';
 
 export interface ordersState {
   orders: TOrder[];
+  total: number;
+  totalToday: number;
 }
 
 const initialState: ordersState = {
-  orders: []
+  orders: [],
+  total: 0,
+  totalToday: 0
 };
 
 const feedsSlice = createSlice({
@@ -32,6 +36,8 @@ const feedsSlice = createSlice({
       })
       .addCase(fetchFeeds.fulfilled, (state, action) => {
         state.orders = action.payload.orders;
+        state.total = action.payload.total;
+        state.totalToday = action.payload.totalToday;
         console.log('Получил feeds');
         // console.log(action.payload);
       });
@@ -39,7 +45,9 @@ const feedsSlice = createSlice({
   selectors: {
     // isIngredientsLoading: (state) => state.isIngredientsLoading,
     // ingredients: (state) => state.data,
-    feeds: (state) => state.orders
+    orders: (state) => state.orders,
+    total: (state) => state.total,
+    totalToday: (state) => state.totalToday
     // main: (state) => state.main,
     // sauce: (state) => state.sauce
   }

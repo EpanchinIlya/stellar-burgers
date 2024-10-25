@@ -13,7 +13,7 @@ import '../../index.css';
 import styles from './app.module.css';
 
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from '../../services/store';
 import { useEffect } from 'react';
 import { fetchIngredients } from '../../storage/thunk/ingredient';
@@ -25,11 +25,14 @@ const App = () => {
     dispatch(fetchIngredients());
   }, []);
 
+  const location = useLocation();
+  const background = location.state?.background;
+  const navigate = useNavigate();
   return (
     <>
       <AppHeader />
       <div className={styles.app}>
-        <Routes>
+        <Routes location={background || location}>
           <Route path='*' element={<NotFound404 />} />
           <Route path='/' element={<ConstructorPage />} />
           <Route path='/feed' element={<Feed />} />
@@ -42,33 +45,45 @@ const App = () => {
         </Routes>
       </div>
 
-      <Routes>
-        <Route
-          path='/feed/:number'
-          element={
-            <Modal title='модал' onClose={() => {}}>
-              <OrderInfo />
-            </Modal>
-          }
-        />
-        <Route
-          path='/ingredients/:id'
-          element={
-            <Modal title='модал' onClose={() => {}}>
-              <IngredientDetails />
-            </Modal>
-          }
-        />
+      {background && (
+        <Routes>
+          <Route
+            path='/feed/:number'
+            element={
+              <Modal
+                title='Заказ'
+                onClose={() => {
+                  navigate(-1);
+                }}
+              >
+                <OrderInfo />
+              </Modal>
+            }
+          />
+          <Route
+            path='/ingredients/:id'
+            element={
+              <Modal
+                title='Детали ингредиента'
+                onClose={() => {
+                  navigate(-1);
+                }}
+              >
+                <IngredientDetails />
+              </Modal>
+            }
+          />
 
-        <Route
-          path='/profile/orders/:number'
-          element={
-            <Modal title='модал' onClose={() => {}}>
-              <OrderInfo />
-            </Modal>
-          }
-        />
-      </Routes>
+          <Route
+            path='/profile/orders/:number'
+            element={
+              <Modal title='модал' onClose={() => {}}>
+                <OrderInfo />
+              </Modal>
+            }
+          />
+        </Routes>
+      )}
     </>
   );
 };
