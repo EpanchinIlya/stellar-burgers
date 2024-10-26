@@ -22,12 +22,7 @@ import { fetchFeeds } from '../thunk/feeds';
 // };
 
 const baseConstructorItems: TConstructorItems = {
-  bun: {
-    name: '',
-    price: 0,
-    image: '',
-    _id: ''
-  },
+  bun: null,
   ingredients: []
 };
 
@@ -71,19 +66,23 @@ const constructorSlice = createSlice({
       console.dir(x);
       console.dir(action.payload);
       state.constructorItems.ingredients =
-        state.constructorItems.ingredients.filter((item) => {
-          item.id !== action.payload.id;
-        });
+        state.constructorItems.ingredients.filter(
+          (item) => item.id !== action.payload.id
+        );
     },
 
-    moveUpIngredient: (
-      state,
-      action: PayloadAction<TConstructorIngredient>
-    ) => {},
-    moveDownIngredient: (
-      state,
-      action: PayloadAction<TConstructorIngredient>
-    ) => {}
+    moveUpIngredient: (state, action: PayloadAction<number>) => {
+      const upper = state.constructorItems.ingredients[action.payload - 1];
+      state.constructorItems.ingredients[action.payload - 1] =
+        state.constructorItems.ingredients[action.payload];
+      state.constructorItems.ingredients[action.payload] = upper;
+    },
+    moveDownIngredient: (state, action: PayloadAction<number>) => {
+      const lower = state.constructorItems.ingredients[action.payload + 1];
+      state.constructorItems.ingredients[action.payload + 1] =
+        state.constructorItems.ingredients[action.payload];
+      state.constructorItems.ingredients[action.payload] = lower;
+    }
   },
   //   extraReducers: (builder) => {
   //     builder

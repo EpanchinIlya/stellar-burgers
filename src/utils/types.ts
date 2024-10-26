@@ -47,6 +47,6 @@ export type TBun = {
 };
 
 export type TConstructorItems = {
-  bun: TBun;
+  bun: TBun | null;
   ingredients: TConstructorIngredient[];
 };
