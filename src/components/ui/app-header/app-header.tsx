@@ -56,10 +56,22 @@ export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => (
         <Logo className='' />
       </div>
       <div className={styles.link_position_last}>
-        <ProfileIcon type={'primary'} />
-        <p className='text text_type_main-default ml-2'>
-          {userName || 'Личный кабинет'}
-        </p>
+        <NavLink to='/feed'>
+          <ProfileIcon type={'primary'} />
+        </NavLink>
+
+        <NavLink
+          to={'/login'}
+          className={
+            location.pathname === '/profile'
+              ? `${styles.link} ${styles.link_active}`
+              : `${styles.link}`
+          }
+        >
+          <p className='text text_type_main-default ml-2'>
+            {userName || 'Личный кабинет'}
+          </p>
+        </NavLink>
       </div>
     </nav>
   </header>

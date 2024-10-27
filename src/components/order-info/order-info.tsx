@@ -8,21 +8,33 @@ import { useSelector } from '../../services/store';
 import { feedsSelectors } from '../../storage/slices/feeds';
 import { useLocation } from 'react-router-dom';
 
+import { useDispatch } from '../../services/store';
+import { useEffect } from 'react';
+import { fetchIngredients } from '../../storage/thunk/ingredient';
+import { fetchFeeds } from '../../storage/thunk/feeds';
+
 export const OrderInfo: FC = () => {
   const orders: TOrder[] = useSelector(feedsSelectors.orders);
+
+  const ingredients: TIngredient[] = useSelector(
+    ingredientSelectors.ingredients
+  );
+  console.log('запрос ордеров из стора');
   console.dir(orders);
 
-  const pathName = useLocation().pathname.split('/');
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (ingredients.length === 0) dispatch(fetchIngredients());
+    if (orders.length === 0) dispatch(fetchFeeds());
+  }, []);
+
+  const pathName = useLocation().pathname.split('/');
   const number = parseInt(pathName[pathName.length - 1]);
 
   const orderById = orders.filter((order) => order.number === number);
   console.log(number);
   const orderData = orderById[0] ? orderById[0] : null;
-
-  const ingredients: TIngredient[] = useSelector(
-    ingredientSelectors.ingredients
-  );
 
   /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {

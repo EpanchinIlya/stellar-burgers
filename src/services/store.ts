@@ -12,6 +12,7 @@ import feedsSlice, { feedsRedusers } from '../storage/slices/feeds';
 import constructorSlice, {
   constructorRedusers
 } from '../storage/slices/constructor';
+import userSlice, { userRedusers } from '../storage/slices/user';
 
 // const rootReducer = () => {
 //   return([ingredientSlice.name]: ingredientSlice.reducer,
@@ -21,7 +22,8 @@ import constructorSlice, {
 const rootReducer = combineReducers({
   [ingredientSlice.name]: ingredientRedusers,
   [feedsSlice.name]: feedsRedusers,
-  [constructorSlice.name]: constructorRedusers
+  [constructorSlice.name]: constructorRedusers,
+  [userSlice.name]: userRedusers
 });
 
 const store = configureStore({

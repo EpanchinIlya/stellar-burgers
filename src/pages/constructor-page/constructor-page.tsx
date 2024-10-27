@@ -9,7 +9,7 @@ import { FC } from 'react';
 import { ingredientSelectors } from '../../storage/slices/ingredients';
 
 export const ConstructorPage: FC = () => {
-  /** TODO: взять переменную из стора */
+  /** взять переменную из стора */
   //const isIngredientsLoading = false;
   // eslint-disable-next-line prettier/prettier
   const isIngredientsLoading = useSelector( ingredientSelectors.isIngredientsLoading);
