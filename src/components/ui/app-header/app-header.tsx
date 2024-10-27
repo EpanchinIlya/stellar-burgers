@@ -61,7 +61,7 @@ export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => (
         </NavLink>
 
         <NavLink
-          to={'/login'}
+          to={'/profile'}
           className={
             location.pathname === '/profile'
               ? `${styles.link} ${styles.link_active}`

@@ -7,7 +7,6 @@ export const fetchFeeds = createAsyncThunk(
   `${FEEDS_SLICE_NAME}/fetchFeeds`,
   async () => {
     const data = await getFeedsApi();
-    //return adaptCardsToClient(data.results)
     return data;
   }
 );
