@@ -65,7 +65,6 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-
           <Route
             path='/forgot-password'
             element={
@@ -74,7 +73,6 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-
           <Route
             path='/reset-password'
             element={
@@ -83,7 +81,6 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-
           <Route
             path='/profile'
             element={
@@ -92,7 +89,6 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-
           <Route
             path='/profile/orders'
             element={
@@ -101,6 +97,16 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+          //
+          <Route
+            path='/profile/orders/:number'
+            element={
+              <ProtectedRoute>
+                <OrderInfo />
+              </ProtectedRoute>
+            }
+          />
+          //
         </Routes>
       </div>
 
@@ -138,7 +144,7 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <Modal
-                  title='модал'
+                  title={`#${orderNumber ? orderNumber.padStart(6, '0') : ''} `}
                   onClose={() => {
                     navigate(-1);
                   }}
