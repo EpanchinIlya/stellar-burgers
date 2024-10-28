@@ -23,7 +23,6 @@ export const ProtectedRoute = ({
     if (!user) dispatch(fetchGetUserApi());
   }, []);
 
-  // const user = useSelector(userSelectors.user);
   const isUserLoading = useSelector(userSelectors.isUserLoading);
   const location = useLocation();
 
@@ -32,8 +31,6 @@ export const ProtectedRoute = ({
   }
 
   if (!onlyUnAuth && !user) {
-    console.log('!onlyUnAuth && !user');
-    console.dir(location.state);
     // если пользователь на странице авторизации и данных в хранилище нет, то делаем редирект
     return <Navigate replace to='/login' state={{ from: location }} />; // в поле from объекта location.state записываем информацию о URL
   }

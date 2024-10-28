@@ -24,11 +24,7 @@ const initialState: ingredientState = {
 const ingredientSlice = createSlice({
   name: INGREDIENT_SLICE_NAME,
   initialState,
-  reducers: {
-    // setSearchQuery: (state, action:PayloadAction<string>) => {
-    // 	state.searchQuery = action.payload;
-    //}
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchIngredients.pending, (state) => {

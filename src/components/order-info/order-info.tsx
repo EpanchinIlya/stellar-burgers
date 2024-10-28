@@ -19,8 +19,6 @@ export const OrderInfo: FC = () => {
   const ingredients: TIngredient[] = useSelector(
     ingredientSelectors.ingredients
   );
-  console.log('запрос ордеров из стора');
-  console.dir(orders);
 
   const dispatch = useDispatch();
 

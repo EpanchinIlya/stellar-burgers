@@ -10,5 +10,3 @@ export const fetchFeeds = createAsyncThunk(
     return data;
   }
 );
-
-//console.dir(fetchCards);

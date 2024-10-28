@@ -46,7 +46,7 @@ export const OrderCard: FC<OrderCardProps> = memo(({ order }) => {
       date
     };
   }, [order, ingredients]);
-  //console.dir(orderInfo);
+
   if (!orderInfo) return null;
 
   return (

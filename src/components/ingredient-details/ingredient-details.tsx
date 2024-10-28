@@ -17,7 +17,7 @@ export const IngredientDetails: FC = () => {
   const foundIngredientMass = ingredients.filter(
     (ingredient) => ingredient._id === id
   );
-  //console.dir(foundIngredientMass);
+
   ingredientData = foundIngredientMass[0] ? foundIngredientMass[0] : null;
 
   if (!ingredientData) {

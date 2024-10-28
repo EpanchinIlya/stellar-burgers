@@ -19,19 +19,13 @@ const initialState: ordersState = {
 const feedsSlice = createSlice({
   name: FEEDS_SLICE_NAME,
   initialState,
-  reducers: {
-    // setSearchQuery: (state, action:PayloadAction<string>) => {
-    // 	state.searchQuery = action.payload;
-    //}
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchFeeds.pending, (state) => {
         console.log('Запрашиваю feeds');
-        // state.isIngredientsLoading = true;
       })
       .addCase(fetchFeeds.rejected, (state) => {
-        // state.isIngredientsLoading = true;
         console.log('Ошибка');
       })
       .addCase(fetchFeeds.fulfilled, (state, action) => {
@@ -39,17 +33,12 @@ const feedsSlice = createSlice({
         state.total = action.payload.total;
         state.totalToday = action.payload.totalToday;
         console.log('Получил feeds');
-        // console.log(action.payload);
       });
   },
   selectors: {
-    // isIngredientsLoading: (state) => state.isIngredientsLoading,
-    // ingredients: (state) => state.data,
     orders: (state) => state.orders,
     total: (state) => state.total,
     totalToday: (state) => state.totalToday
-    // main: (state) => state.main,
-    // sauce: (state) => state.sauce
   }
 });
 

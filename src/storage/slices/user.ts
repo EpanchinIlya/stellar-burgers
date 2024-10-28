@@ -12,7 +12,6 @@ import {
 } from '../thunk/user';
 
 import { deleteCookie, setCookie } from '../../utils/cookie';
-//import { setCookie } from '../utils/cookie';
 
 export interface userState {
   user: TUser | null;
@@ -51,8 +50,6 @@ const userSlice = createSlice({
         localStorage.removeItem('refreshToken');
         deleteCookie('accessToken');
         state.user = null;
-
-        console.dir(action);
       })
       .addCase(fetchLoginUser.fulfilled, (state, action) => {
         state.isUserLoading = false;
@@ -71,8 +68,6 @@ const userSlice = createSlice({
         state.isUserLoading = false;
         state.error = action.error.message;
         console.log('Ошибка  registerUser ');
-
-        console.dir(action);
       })
       .addCase(fetchRegisterUserApi.fulfilled, (state, action) => {
         localStorage.setItem('refreshToken', action.payload.refreshToken);
@@ -94,7 +89,6 @@ const userSlice = createSlice({
         state.error = action.error.message;
 
         console.log('Ошибка  updateUser ');
-        console.dir(action);
       })
       .addCase(fetchUpdateUserApi.fulfilled, (state, action) => {
         if (action.payload.success) {
@@ -115,7 +109,6 @@ const userSlice = createSlice({
         state.error = action.error.message;
 
         console.log('Ошибка  logout ');
-        console.dir(action);
       })
       .addCase(fetchLogoutApi.fulfilled, (state, action) => {
         if (action.payload.success) {
@@ -137,7 +130,6 @@ const userSlice = createSlice({
         state.isUserLoading = false;
         state.error = action.error.message;
         console.log('Ошибка  getUser ');
-        console.dir(action);
       })
       .addCase(fetchGetUserApi.fulfilled, (state, action) => {
         if (action.payload.success) {
@@ -156,11 +148,10 @@ const userSlice = createSlice({
         state.isUserLoading = false;
         state.error = action.error.message;
         console.log('Ошибка  getOrder ');
-        console.dir(action);
       })
       .addCase(fetchGetOrdersApi.fulfilled, (state, action) => {
         state.userOrders = action.payload;
-        console.dir(action.payload);
+
         console.log('удачное  getOrder');
         state.isUserLoading = false;
       });

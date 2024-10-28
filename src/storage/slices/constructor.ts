@@ -65,9 +65,6 @@ const constructorSlice = createSlice({
       state,
       action: PayloadAction<TConstructorIngredient>
     ) => {
-      const x = state.constructorItems.ingredients;
-      console.dir(x);
-      console.dir(action.payload);
       state.constructorItems.ingredients =
         state.constructorItems.ingredients.filter(
           (item) => item.id !== action.payload.id
@@ -104,7 +101,6 @@ const constructorSlice = createSlice({
         state.error = action.error.message;
 
         console.log('Ошибка  orderBurgerApi');
-        console.dir(action);
       })
       .addCase(fetchorderBurgerApi.fulfilled, (state, action) => {
         if (action.payload.success) {
@@ -113,7 +109,6 @@ const constructorSlice = createSlice({
           state.constructorItems.ingredients = [];
           console.log('удачное  orderBurgerApi');
           console.log(action.payload.name);
-          console.dir(state.orderModalData);
         }
         state.orderRequest = false;
       });
@@ -124,13 +119,6 @@ const constructorSlice = createSlice({
     orderModalData: (state) => state.orderModalData,
     ingredients: (state) => state.constructorItems.ingredients,
     bunId: (state) => state.constructorItems.bun?._id
-    // isIngredientsLoading: (state) => state.isIngredientsLoading,
-    // ingredients: (state) => state.data,
-    // orders: (state) => state.orders,
-    // total: (state) => state.total,
-    // totalToday: (state) => state.totalToday
-    // main: (state) => state.main,
-    // sauce: (state) => state.sauce
   }
 });
 
