@@ -9,6 +9,7 @@ import {
   TOrder
 } from '@utils-types';
 import { fetchFeeds } from '../thunk/feeds';
+import { fetchorderBurgerApi } from '../thunk/constructor';
 
 // export type TBun = {
 //   name: string;
@@ -39,13 +40,15 @@ const baseOrderModalData: TOrder = {
 export interface TConstructorState {
   constructorItems: TConstructorItems;
   orderRequest: boolean;
-  orderModalData: TOrder;
+  orderModalData: TOrder | null;
+  error: string | undefined;
 }
 
 const initialState: TConstructorState = {
   constructorItems: baseConstructorItems,
   orderRequest: false,
-  orderModalData: baseOrderModalData
+  orderModalData: null,
+  error: undefined
 };
 
 const constructorSlice = createSlice({
@@ -82,31 +85,45 @@ const constructorSlice = createSlice({
       state.constructorItems.ingredients[action.payload + 1] =
         state.constructorItems.ingredients[action.payload];
       state.constructorItems.ingredients[action.payload] = lower;
+    },
+    clearOrderModalData: (state, action: PayloadAction) => {
+      state.orderModalData = null;
     }
   },
-  //   extraReducers: (builder) => {
-  //     builder
-  //       .addCase(fetchFeeds.pending, (state) => {
-  //         console.log('Запрашиваю feeds');
-  //         // state.isIngredientsLoading = true;
-  //       })
-  //       .addCase(fetchFeeds.rejected, (state) => {
-  //         // state.isIngredientsLoading = true;
-  //         console.log('Ошибка');
-  //       })
-  //       .addCase(fetchFeeds.fulfilled, (state, action) => {
-  //         state.orders = action.payload.orders;
-  //         state.total = action.payload.total;
-  //         state.totalToday = action.payload.totalToday;
-  //         console.log('Получил feeds');
-  //         // console.log(action.payload);
-  //       });
-  //   },
+  extraReducers: (builder) => {
+    builder
+      // orderBurgerApi - заказ булки
+      .addCase(fetchorderBurgerApi.pending, (state) => {
+        console.log('Запрашиваю orderBurgerApi');
+        state.orderModalData = null;
+        state.orderRequest = true;
+        state.error = undefined;
+      })
+      .addCase(fetchorderBurgerApi.rejected, (state, action) => {
+        state.orderRequest = false;
+        state.error = action.error.message;
+
+        console.log('Ошибка  orderBurgerApi');
+        console.dir(action);
+      })
+      .addCase(fetchorderBurgerApi.fulfilled, (state, action) => {
+        if (action.payload.success) {
+          state.orderModalData = action.payload.order;
+          state.constructorItems.bun = null;
+          state.constructorItems.ingredients = [];
+          console.log('удачное  orderBurgerApi');
+          console.log(action.payload.name);
+          console.dir(state.orderModalData);
+        }
+        state.orderRequest = false;
+      });
+  },
   selectors: {
     constructorItems: (state) => state.constructorItems,
     orderRequest: (state) => state.orderRequest,
-    orderModalData: (state) => state.orderModalData
-
+    orderModalData: (state) => state.orderModalData,
+    ingredients: (state) => state.constructorItems.ingredients,
+    bunId: (state) => state.constructorItems.bun?._id
     // isIngredientsLoading: (state) => state.isIngredientsLoading,
     // ingredients: (state) => state.data,
     // orders: (state) => state.orders,

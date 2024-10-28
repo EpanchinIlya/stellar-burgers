@@ -32,7 +32,6 @@ export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => (
             </p>
           </NavLink>
         </>
-
         <>
           <NavLink to='/feed'>
             <BurgerIcon
@@ -63,7 +62,12 @@ export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => (
         <NavLink
           to={'/profile'}
           className={
-            location.pathname === '/profile'
+            location.pathname === '/profile' ||
+            location.pathname === '/login' ||
+            location.pathname === '/forgot-password' ||
+            location.pathname === '/register' ||
+            location.pathname === '/reset-password' ||
+            location.pathname === '/profile/orders'
               ? `${styles.link} ${styles.link_active}`
               : `${styles.link}`
           }

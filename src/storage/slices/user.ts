@@ -1,25 +1,29 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { USER_SLICE_NAME } from './sliceNames';
-import { TUser } from '@utils-types';
+import { TOrder, TUser } from '@utils-types';
 import {
+  fetchGetOrdersApi,
+  fetchGetUserApi,
   fetchLoginUser,
+  fetchLogoutApi,
   fetchRegisterUserApi,
   fetchUpdateUserApi
 } from '../thunk/user';
 
-import { setCookie } from '../../utils/cookie';
+import { deleteCookie, setCookie } from '../../utils/cookie';
 //import { setCookie } from '../utils/cookie';
 
 export interface userState {
   user: TUser | null;
   isUserLoading: boolean;
   error: string | undefined;
+  userOrders: TOrder[];
 }
 
 const initialState: userState = {
   user: null,
-
+  userOrders: [],
   isUserLoading: false,
   error: undefined
 };
@@ -28,9 +32,9 @@ const userSlice = createSlice({
   name: USER_SLICE_NAME,
   initialState,
   reducers: {
-    // setSearchQuery: (state, action:PayloadAction<string>) => {
-    // 	state.searchQuery = action.payload;
-    //}
+    clearUserOrders: (state, action: PayloadAction) => {
+      state.userOrders = [];
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -44,9 +48,8 @@ const userSlice = createSlice({
         state.isUserLoading = false;
         state.error = action.error.message;
         console.log('Ошибка LoginUser ');
-
-        localStorage.setItem('refreshToken', '');
-        setCookie('accessToken', '');
+        localStorage.removeItem('refreshToken');
+        deleteCookie('accessToken');
         state.user = null;
 
         console.dir(action);
@@ -57,9 +60,6 @@ const userSlice = createSlice({
         localStorage.setItem('refreshToken', action.payload.refreshToken);
         setCookie('accessToken', action.payload.accessToken);
         console.log('Удачное LoginUser');
-
-        // Navigate replace to={from} />;
-        // console.log(action.payload);
       })
       // Register
       .addCase(fetchRegisterUserApi.pending, (state) => {
@@ -103,12 +103,73 @@ const userSlice = createSlice({
         state.user = action.payload.user;
         state.isUserLoading = false;
         console.log('удачное  updateUser');
+      })
+      // logout
+      .addCase(fetchLogoutApi.pending, (state) => {
+        console.log('Запрашиваю logout');
+        state.isUserLoading = true;
+        state.error = undefined;
+      })
+      .addCase(fetchLogoutApi.rejected, (state, action) => {
+        state.isUserLoading = false;
+        state.error = action.error.message;
+
+        console.log('Ошибка  logout ');
+        console.dir(action);
+      })
+      .addCase(fetchLogoutApi.fulfilled, (state, action) => {
+        if (action.payload.success) {
+          state.user = null;
+          localStorage.removeItem('refreshToken');
+          deleteCookie('accessToken');
+          console.log('удачное  logout');
+        }
+        state.isUserLoading = false;
+      })
+      // getUser
+      .addCase(fetchGetUserApi.pending, (state) => {
+        console.log('Запрашиваю getUser');
+        state.isUserLoading = true;
+        state.user = null;
+        state.error = undefined;
+      })
+      .addCase(fetchGetUserApi.rejected, (state, action) => {
+        state.isUserLoading = false;
+        state.error = action.error.message;
+        console.log('Ошибка  getUser ');
+        console.dir(action);
+      })
+      .addCase(fetchGetUserApi.fulfilled, (state, action) => {
+        if (action.payload.success) {
+          state.user = action.payload.user;
+          console.log('удачное  getUser');
+        }
+        state.isUserLoading = false;
+      })
+      // getOrder
+      .addCase(fetchGetOrdersApi.pending, (state) => {
+        console.log('Запрашиваю getOrder');
+        state.isUserLoading = true;
+        state.error = undefined;
+      })
+      .addCase(fetchGetOrdersApi.rejected, (state, action) => {
+        state.isUserLoading = false;
+        state.error = action.error.message;
+        console.log('Ошибка  getOrder ');
+        console.dir(action);
+      })
+      .addCase(fetchGetOrdersApi.fulfilled, (state, action) => {
+        state.userOrders = action.payload;
+        console.dir(action.payload);
+        console.log('удачное  getOrder');
+        state.isUserLoading = false;
       });
   },
   selectors: {
     user: (state) => state.user,
     error: (state) => state.error,
-    isUserLoading: (state) => state.isUserLoading
+    isUserLoading: (state) => state.isUserLoading,
+    userOrders: (state) => state.userOrders
   }
 });
 

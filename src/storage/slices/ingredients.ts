@@ -39,7 +39,6 @@ const ingredientSlice = createSlice({
         console.log('Ошибка');
       })
       .addCase(fetchIngredients.fulfilled, (state, action) => {
-        // console.log(action.payload);
         const allData = action.payload;
         const bun: TIngredient[] = [];
         const main: TIngredient[] = [];

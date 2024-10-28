@@ -4,7 +4,7 @@ import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { fetchUpdateUserApi } from '../../storage/thunk/user';
 import { useSelector } from '../../services/store';
 import { useDispatch } from '../../services/store';
-import { userSelectors } from '../../storage/slices/user';
+import { userActions, userSelectors } from '../../storage/slices/user';
 
 export const Profile: FC = () => {
   /** взять переменную из стора */
@@ -25,6 +25,11 @@ export const Profile: FC = () => {
     password: ''
   });
 
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(userActions.clearUserOrders());
+  }, []);
+
   useEffect(() => {
     setFormValue((prevState) => ({
       ...prevState,
@@ -37,8 +42,6 @@ export const Profile: FC = () => {
     formValue.name !== user?.name ||
     formValue.email !== user?.email ||
     !!formValue.password;
-
-  const dispatch = useDispatch();
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();

@@ -10,9 +10,10 @@ import { ingredientSelectors } from '../../storage/slices/ingredients';
 
 export const ConstructorPage: FC = () => {
   /** взять переменную из стора */
-  //const isIngredientsLoading = false;
-  // eslint-disable-next-line prettier/prettier
-  const isIngredientsLoading = useSelector( ingredientSelectors.isIngredientsLoading);
+
+  const isIngredientsLoading = useSelector(
+    ingredientSelectors.isIngredientsLoading
+  );
   return (
     <>
       {isIngredientsLoading ? (
