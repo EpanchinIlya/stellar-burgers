@@ -11,17 +11,6 @@ import {
 import { fetchFeeds } from '../thunk/feeds';
 import { fetchorderBurgerApi } from '../thunk/constructor';
 
-// export type TBun = {
-//   name: string;
-//   price: number;
-//   image: string;
-// };
-
-// export type TConstructorItems = {
-//   bun: TBun;
-//   ingredients: TIngredient[];
-// };
-
 const baseConstructorItems: TConstructorItems = {
   bun: null,
   ingredients: []
@@ -51,7 +40,7 @@ const initialState: TConstructorState = {
   error: undefined
 };
 
-const constructorSlice = createSlice({
+export const constructorSlice = createSlice({
   name: CONSTRUCTOR_SLICE_NAME,
   initialState,
   reducers: {

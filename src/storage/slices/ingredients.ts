@@ -13,7 +13,7 @@ export interface ingredientState {
   data: TIngredient[];
 }
 
-const initialState: ingredientState = {
+export const initialState: ingredientState = {
   isIngredientsLoading: true,
   bun: [],
   main: [],
@@ -39,7 +39,7 @@ const ingredientSlice = createSlice({
         const bun: TIngredient[] = [];
         const main: TIngredient[] = [];
         const sauce: TIngredient[] = [];
-
+        console.dir(allData);
         allData.forEach((item) => {
           switch (item.type) {
             case 'bun':

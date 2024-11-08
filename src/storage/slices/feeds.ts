@@ -16,7 +16,7 @@ const initialState: ordersState = {
   totalToday: 0
 };
 
-const feedsSlice = createSlice({
+export const feedsSlice = createSlice({
   name: FEEDS_SLICE_NAME,
   initialState,
   reducers: {},
