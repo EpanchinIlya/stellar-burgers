@@ -16,16 +16,6 @@ const baseConstructorItems: TConstructorItems = {
   ingredients: []
 };
 
-const baseOrderModalData: TOrder = {
-  _id: '',
-  status: '',
-  name: '',
-  createdAt: '',
-  updatedAt: '',
-  number: 0,
-  ingredients: []
-};
-
 export interface TConstructorState {
   constructorItems: TConstructorItems;
   orderRequest: boolean;
@@ -72,15 +62,14 @@ export const constructorSlice = createSlice({
         state.constructorItems.ingredients[action.payload];
       state.constructorItems.ingredients[action.payload] = lower;
     },
-    clearOrderModalData: (state, action: PayloadAction) => {
+    clearOrderModalData: (state) => {
       state.orderModalData = null;
     }
   },
   extraReducers: (builder) => {
     builder
-      // orderBurgerApi - заказ булки
+
       .addCase(fetchorderBurgerApi.pending, (state) => {
-        console.log('Запрашиваю orderBurgerApi');
         state.orderModalData = null;
         state.orderRequest = true;
         state.error = undefined;
@@ -88,16 +77,12 @@ export const constructorSlice = createSlice({
       .addCase(fetchorderBurgerApi.rejected, (state, action) => {
         state.orderRequest = false;
         state.error = action.error.message;
-
-        console.log('Ошибка  orderBurgerApi');
       })
       .addCase(fetchorderBurgerApi.fulfilled, (state, action) => {
         if (action.payload.success) {
           state.orderModalData = action.payload.order;
           state.constructorItems.bun = null;
           state.constructorItems.ingredients = [];
-          console.log('удачное  orderBurgerApi');
-          console.log(action.payload.name);
         }
         state.orderRequest = false;
       });
