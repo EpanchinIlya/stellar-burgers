@@ -100,23 +100,21 @@ describe('Тесты конструкора бургера', () => {
         ingredients: mockIngredients // инициализируем массивом mockIngredients
       },
       orderRequest: false,
-      orderModalData: orderModalData,
+      orderModalData: orderModalData[0],
       error: undefined
     };
     const initialState = constructorRedusers(customInitialState, {
       type: '@@INIT'
     });
-    
+
     const newState = constructorRedusers(
       initialState,
       constructorActions.clearOrderModalData()
     );
     expect(newState.orderModalData).toEqual(null);
-   
   });
 
-
-  test('Тест fetchorderBurgerApi rerquest', () => {
+  test('Тест fetchOrderBurgerApi rerquest', () => {
     const customInitialState: TConstructorState = {
       constructorItems: {
         bun: null,
@@ -130,15 +128,16 @@ describe('Тесты конструкора бургера', () => {
       type: '@@INIT'
     });
 
-
-    const newState = constructorRedusers(initialState, fetchorderBurgerApi.pending('fetchorderBurgerApiPending', []));
+    const newState = constructorRedusers(
+      initialState,
+      fetchorderBurgerApi.pending('fetchOrderBurgerApiPending', [])
+    );
     expect(newState.orderRequest).toEqual(true);
     expect(newState.orderModalData).toEqual(null);
     expect(newState.error).toEqual(undefined);
-    
   });
 
-  test('Тест fetchorderBurgerApi rejected', () => {
+  test('Тест fetchOrderBurgerApi rejected', () => {
     const customInitialState: TConstructorState = {
       constructorItems: {
         bun: null,
@@ -153,14 +152,15 @@ describe('Тесты конструкора бургера', () => {
     });
 
     const testError = new Error('Test Error');
-    const newState = constructorRedusers(initialState, fetchorderBurgerApi.rejected( testError,'fetchorderBurgerApiRejected', [] ));
+    const newState = constructorRedusers(
+      initialState,
+      fetchorderBurgerApi.rejected(testError, 'fetchOrderBurgerApiRejected', [])
+    );
     expect(newState.orderRequest).toEqual(false);
     expect(newState.error).toEqual(testError.message);
-   
-    
   });
 
-  test('Тест fetchorderBurgerApi fulfilled', () => {
+  test('Тест fetchOrderBurgerApi fulfilled', () => {
     const customInitialState: TConstructorState = {
       constructorItems: {
         bun: bun[0],
@@ -174,24 +174,20 @@ describe('Тесты конструкора бургера', () => {
       type: '@@INIT'
     });
 
-    const payload: TNewOrderResponse ={
+    const payload: TNewOrderResponse = {
       success: true,
-      order:  orderModalData,
-      name: "string",
+      order: orderModalData[0],
+      name: 'string'
     };
-    
-    const nullIngredients:TIngredient[] = [];
-    const newState = constructorRedusers(initialState, fetchorderBurgerApi.fulfilled( payload,'fetchorderBurgerApiRejected', []));
+
+    const nullIngredients: TIngredient[] = [];
+    const newState = constructorRedusers(
+      initialState,
+      fetchorderBurgerApi.fulfilled(payload, 'fetchOrderBurgerApiRejected', [])
+    );
     expect(newState.orderModalData).toEqual(payload.order);
     expect(newState.constructorItems.bun).toEqual(null);
     expect(newState.constructorItems.ingredients).toEqual(nullIngredients);
     expect(newState.orderRequest).toEqual(false);
-    
-
-;
-   
-    
   });
-
-  
 });

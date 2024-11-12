@@ -4,7 +4,7 @@ import { fetchIngredients } from '../thunk/ingredient';
 import { INGREDIENT_SLICE_NAME } from './sliceNames';
 import { TIngredient } from '@utils-types';
 
-export interface ingredientState {
+export interface TIngredientState {
   isIngredientsLoading: Boolean;
   bun: TIngredient[];
   main: TIngredient[];
@@ -13,7 +13,7 @@ export interface ingredientState {
   data: TIngredient[];
 }
 
-export const initialState: ingredientState = {
+export const initialState: TIngredientState = {
   isIngredientsLoading: true,
   bun: [],
   main: [],
@@ -31,15 +31,14 @@ const ingredientSlice = createSlice({
         state.isIngredientsLoading = true;
       })
       .addCase(fetchIngredients.rejected, (state) => {
-        state.isIngredientsLoading = true;
-        console.log('Ошибка');
+        state.isIngredientsLoading = false;
       })
       .addCase(fetchIngredients.fulfilled, (state, action) => {
         const allData = action.payload;
         const bun: TIngredient[] = [];
         const main: TIngredient[] = [];
         const sauce: TIngredient[] = [];
-        console.dir(allData);
+
         allData.forEach((item) => {
           switch (item.type) {
             case 'bun':
@@ -52,7 +51,6 @@ const ingredientSlice = createSlice({
               sauce.push(item);
               break;
             default:
-              console.log('Invalid ingredient');
           }
         });
 

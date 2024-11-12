@@ -1,4 +1,5 @@
-{
+[
+  {
   "_id": "1",
   "status": "",
   "name": "",
@@ -6,4 +7,5 @@
   "updatedAt": "",
   "number": 1,
   "ingredients": []
-}
+   } 
+]
