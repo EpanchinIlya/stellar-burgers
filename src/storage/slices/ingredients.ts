@@ -50,7 +50,6 @@ const ingredientSlice = createSlice({
             case 'sauce':
               sauce.push(item);
               break;
-            default:
           }
         });
 
