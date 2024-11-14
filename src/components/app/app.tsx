@@ -129,6 +129,7 @@ const App = () => {
             path='/ingredients/:id'
             element={
               <Modal
+                data-cy='modal-ingredient'
                 title='Детали ингредиента'
                 onClose={() => {
                   navigate(-1);
