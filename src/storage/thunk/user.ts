@@ -48,6 +48,8 @@ export const fetchGetUserApi = createAsyncThunk(
   `${USER_SLICE_NAME}/fetchGetUserApi`,
   async () => {
     const data = await getUserApi();
+    console.log('updateUserApi');
+    console.dir(data);
     return data;
   }
 );
