@@ -92,6 +92,7 @@
   "scripts": {
     "start": "webpack serve --mode=development",
     "cypress:open": "cypress open",
+    "cypresss": "cypress run --config video=false",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
