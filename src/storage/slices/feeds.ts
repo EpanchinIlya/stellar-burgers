@@ -16,23 +16,18 @@ const initialState: ordersState = {
   totalToday: 0
 };
 
-const feedsSlice = createSlice({
+export const feedsSlice = createSlice({
   name: FEEDS_SLICE_NAME,
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchFeeds.pending, (state) => {
-        console.log('Запрашиваю feeds');
-      })
-      .addCase(fetchFeeds.rejected, (state) => {
-        console.log('Ошибка');
-      })
+      // .addCase(fetchFeeds.pending, (state) => {})
+      // .addCase(fetchFeeds.rejected, (state) => {})
       .addCase(fetchFeeds.fulfilled, (state, action) => {
         state.orders = action.payload.orders;
         state.total = action.payload.total;
         state.totalToday = action.payload.totalToday;
-        console.log('Получил feeds');
       });
   },
   selectors: {

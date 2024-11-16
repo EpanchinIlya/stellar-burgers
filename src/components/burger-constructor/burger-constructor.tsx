@@ -28,11 +28,12 @@ export const BurgerConstructor: FC = () => {
   if (bunId) ingredientsId.push(bunId);
 
   const onOrderClick = () => {
+    console.log('заказать заказ');
     if (!user) {
       navigate('/login');
       return;
     }
-
+    console.log('делаем заказ');
     if (!constructorItems.bun || orderRequest) return;
     dispatch(fetchorderBurgerApi(ingredientsId));
   };

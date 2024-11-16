@@ -14,7 +14,7 @@ import constructorSlice, {
 } from '../storage/slices/constructor';
 import userSlice, { userRedusers } from '../storage/slices/user';
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   [ingredientSlice.name]: ingredientRedusers,
   [feedsSlice.name]: feedsRedusers,
   [constructorSlice.name]: constructorRedusers,

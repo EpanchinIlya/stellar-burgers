@@ -45,3 +45,15 @@ export function setCookie(
 export function deleteCookie(name: string) {
   setCookie(name, '', { expires: -1 });
 }
+
+export function isCookieEmpty(name: string) {
+  const cookies = document.cookie.split('; ');
+  for (let cookie of cookies) {
+    const [cookieName, cookieValue] = cookie.split('=');
+    if (cookieName === name) {
+      // Проверяем, что значение куки пустое
+      return cookieValue === '' || cookieValue === undefined;
+    }
+  }
+  return false; // Куки с таким именем не существует
+}

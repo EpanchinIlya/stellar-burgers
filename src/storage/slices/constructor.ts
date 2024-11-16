@@ -11,29 +11,8 @@ import {
 import { fetchFeeds } from '../thunk/feeds';
 import { fetchorderBurgerApi } from '../thunk/constructor';
 
-// export type TBun = {
-//   name: string;
-//   price: number;
-//   image: string;
-// };
-
-// export type TConstructorItems = {
-//   bun: TBun;
-//   ingredients: TIngredient[];
-// };
-
 const baseConstructorItems: TConstructorItems = {
   bun: null,
-  ingredients: []
-};
-
-const baseOrderModalData: TOrder = {
-  _id: '',
-  status: '',
-  name: '',
-  createdAt: '',
-  updatedAt: '',
-  number: 0,
   ingredients: []
 };
 
@@ -51,7 +30,7 @@ const initialState: TConstructorState = {
   error: undefined
 };
 
-const constructorSlice = createSlice({
+export const constructorSlice = createSlice({
   name: CONSTRUCTOR_SLICE_NAME,
   initialState,
   reducers: {
@@ -83,15 +62,14 @@ const constructorSlice = createSlice({
         state.constructorItems.ingredients[action.payload];
       state.constructorItems.ingredients[action.payload] = lower;
     },
-    clearOrderModalData: (state, action: PayloadAction) => {
+    clearOrderModalData: (state) => {
       state.orderModalData = null;
     }
   },
   extraReducers: (builder) => {
     builder
-      // orderBurgerApi - заказ булки
+
       .addCase(fetchorderBurgerApi.pending, (state) => {
-        console.log('Запрашиваю orderBurgerApi');
         state.orderModalData = null;
         state.orderRequest = true;
         state.error = undefined;
@@ -99,16 +77,12 @@ const constructorSlice = createSlice({
       .addCase(fetchorderBurgerApi.rejected, (state, action) => {
         state.orderRequest = false;
         state.error = action.error.message;
-
-        console.log('Ошибка  orderBurgerApi');
       })
       .addCase(fetchorderBurgerApi.fulfilled, (state, action) => {
         if (action.payload.success) {
           state.orderModalData = action.payload.order;
           state.constructorItems.bun = null;
           state.constructorItems.ingredients = [];
-          console.log('удачное  orderBurgerApi');
-          console.log(action.payload.name);
         }
         state.orderRequest = false;
       });

@@ -6,12 +6,11 @@ import {
   getUserApi,
   loginUserApi,
   logoutApi,
-  orderBurgerApi,
   registerUserApi,
   TLoginData,
   TRegisterData,
   updateUserApi
-} from '@api';
+} from '../../utils/burger-api';
 
 export const fetchLoginUser = createAsyncThunk(
   `${USER_SLICE_NAME}/fetchLoginUser`,
@@ -49,6 +48,8 @@ export const fetchGetUserApi = createAsyncThunk(
   `${USER_SLICE_NAME}/fetchGetUserApi`,
   async () => {
     const data = await getUserApi();
+    console.log('updateUserApi');
+    console.dir(data);
     return data;
   }
 );
